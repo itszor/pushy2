@@ -1,0 +1,21 @@
+# Python / editors
+__pycache__/
+*.pyc
+*.swp
+
+# Analysis outputs (analysis/run.sh, or make regen in recomp/)
+analysis/ss.json
+analysis/pushy2.json
+analysis/pushy2.json.pickle
+analysis/out/
+
+# Recompilation: generated C, objects, binaries, run outputs
+recomp/gen/
+recomp/*.o
+recomp/pushy2
+recomp/pushy2-cov
+recomp/recomp.*
+recomp/*.log
+recomp/screenshot-*.bmp
+recomp/*.wav
+recomp/savedata/
