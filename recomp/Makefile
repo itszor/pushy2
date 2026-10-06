@@ -42,7 +42,16 @@ regen:
 	python3 gen_c.py --img='../!PushyII/!RunImage' --json=../analysis/pushy2.json \
 	    --tsvdir=../analysis/out --out=gen
 
+# "make roots" merges the gap entries a --trace-gaps run logged
+# (untranslated.log, or LOG=...) into ../analysis/pushy2.roots, so the next
+# "make regen" translates them.
+SS  ?= $(HOME)/stuff/superspider
+LOG ?= untranslated.log
+
+roots:
+	python3 $(SS)/tools/gap_roots.py '../!PushyII/!RunImage' 8000 ../analysis/pushy2.roots $(LOG)
+
 clean:
 	rm -f gen/*.o game.o pushy2 pushy2-cov *.cov.o gen/*.cov.o
 
-.PHONY: FORCE cov regen clean
+.PHONY: FORCE cov regen roots clean
