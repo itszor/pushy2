@@ -7,8 +7,8 @@ image written in assembler, 30K), graphics for three kinds of screen mode
 sound and fade tables (Data). `!Help` and `Diary` are the author's notes.
 
     analysis/run.sh     SuperSpider (~/stuff/superspider) on !RunImage:
-                        analysis/pushy2.json(.pickle), analysis/out/
-    recomp/             make regen (analysis + gen_c.py), make, ./pushy2
+                        analysis/pushy2.json
+    recomp/             make regen (analysis + superspider gen), make, ./pushy2
 
 Running
 -------

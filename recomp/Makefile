@@ -1,5 +1,5 @@
 # Static recompilation of Pushy II: the translated program (gen/, from
-# gen_c.py) and game.c, linked with libroger (the RISC OS runtime).
+# superspider gen) and game.c, linked with libroger (the RISC OS runtime).
 ROGER   ?= $(HOME)/stuff/libroger
 CC      ?= gcc
 CFLAGS  ?= -O2 -g -w -fno-strict-aliasing $(if $(TRACE),-DRECOMP_TRACE)
@@ -37,10 +37,11 @@ pushy2-cov: $(COVOBJ) FORCE
 cov.cov.o: $(COVDIR)/cov.c $(COVDIR)/cov.h
 	$(CC) $(CFLAGS) -c -o $@ $<
 
+SS  ?= $(HOME)/stuff/superspider
+
 regen:
-	cd ../analysis && ./run.sh
-	python3 gen_c.py --img='../!PushyII/!RunImage' --json=../analysis/pushy2.json \
-	    --tsvdir=../analysis/out --out=gen
+	cd ../analysis && SUPERSPIDER=$(SS) ./run.sh
+	$(SS)/_build/default/bin/main.exe gen '../!PushyII/!RunImage' 8000 ../analysis/pushy2.json --c gen
 
 # "make roots" merges the gap entries a --trace-gaps run logged
 # (untranslated.log, or LOG=...) into ../analysis/pushy2.roots, so the next
