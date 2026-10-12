@@ -20,7 +20,26 @@ static const char *const prefixes[] = {"<PushyII$Dir>.", "<Obey$Dir>.", NULL};
  * stripped above) */
 static const char *const variables[] = {"PushyII$Dir", "!PushyII", NULL};
 
-#define APPDIR "../!PushyII"
+#define APPDIR "../game/!PushyII"
+
+/* !RunImage, whatever ,load-exec suffix the extraction gave it */
+static char image_path[1024];
+
+static const char *find_image(void)
+{
+    DIR *d = opendir(APPDIR);
+    struct dirent *e;
+    while (d && (e = readdir(d))) {
+        size_t l = strcspn(e->d_name, ",");
+        if (l == 9 && !strncasecmp(e->d_name, "!RunImage", 9)) {
+            snprintf(image_path, sizeof image_path, "%s/%s", APPDIR, e->d_name);
+            break;
+        }
+    }
+    if (d) closedir(d);
+    if (!image_path[0]) { fprintf(stderr, "no %s/!RunImage: build.sh extracts it\n", APPDIR); exit(1); }
+    return image_path;
+}
 
 /* --levels=NAME: the level set chosen from the icon bar menu's Levels
  * submenu, which lists the files in Levels (in RISC OS's order, names
@@ -55,7 +74,7 @@ static int arg(const char *a)
     DIR *d = opendir(APPDIR "/Levels");
     struct dirent *e;
     while (d && (e = readdir(d)) && n < 64)
-        if (e->d_name[0] != '.') names[n++] = strdup(e->d_name);
+        if (e->d_name[0] != '.') names[n++] = strndup(e->d_name, strcspn(e->d_name, ","));   /* (no ,load-exec) */
     if (d) closedir(d);
     qsort(names, n, sizeof *names, name_cmp);
     for (int k = 0; k < n; k++)
@@ -104,7 +123,6 @@ static const struct roger_key keys[] = {
  * graphics). */
 static struct roger_config config = {
     .title = "Pushy II (recompiled)",
-    .image_path = APPDIR "/!RunImage",
     .image = &recomp_image,
     .appdir = APPDIR,
     .dir_prefixes = prefixes,
@@ -121,4 +139,8 @@ static struct roger_config config = {
              "  --archimedes      an A3000 (MODE 13, lo-res graphics), not a Risc PC\n",
 };
 
-int main(int argc, char **argv) { roger_main(argc, argv, &config); }
+int main(int argc, char **argv)
+{
+    config.image_path = find_image();
+    roger_main(argc, argv, &config);
+}

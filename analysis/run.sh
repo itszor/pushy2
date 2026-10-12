@@ -7,6 +7,6 @@
 set -e
 HERE="$(cd "$(dirname "$0")" && pwd)"
 SUPERSPIDER="${SUPERSPIDER:-$HOME/stuff/superspider}"
-IMG="$HERE/../!PushyII/!RunImage"
+IMG="$(ls "$HERE"/../game/!PushyII/!RunImage,* | head -1)"   # whatever its ,load-exec suffix
 (cd "$SUPERSPIDER" && dune build)
 "$SUPERSPIDER/_build/default/bin/main.exe" analyse "$IMG" 8000 --full --roots "$HERE/pushy2.roots" -o "$HERE/pushy2.json"

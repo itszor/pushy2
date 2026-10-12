@@ -1,0 +1,73 @@
+{
+ "name": "pushy2",
+ "title": "Pushy II (R-Fred-W / FishNet Software, 1996; freeware)",
+ "platform": "acorn-archimedes",
+ "doc": "A recipe: how to turn a user's own copy of the game into a native executable. It holds no game data: the inputs are recognised by content (see $SS/tools/weave.py).",
+ "inputs": {
+  "containers": {
+   "PUSHY2": "64e208e72b9d75a42bc8cc258bf6cd29afd69c315f24b37f49532527afcd5ef6"
+  },
+  "formats": [
+   "zip",
+   "directory"
+  ]
+ },
+ "discs": [
+  {
+   "name": "app",
+   "title": "!PushyII: a RISC OS zip of the application (PUSHY2)",
+   "known_images": [
+    "27573ed07f606ec3a0b2fee4bc04bd2890b5e5c1b4220c7ee4e50bb90a2a4aec"
+   ],
+   "key_files": {
+    "!PushyII/!Boot": "73478af195a9c5d053b9c6ada37d36b485daa9783fc742312d692b9cc91c3f09",
+    "!PushyII/!Help": "10f35b2b6304762aa9a426ba44927f70084290dac2b8e19a06d3a217845e4d4f",
+    "!PushyII/!Run": "b882f452e6e0eebdc52b34d8d657da7e86b6c735ca304de7e96eb92f39688c3e",
+    "!PushyII/!RunImage": "357dbe6f95b0bd153b3b87996156512e943749565a9c1adf2290673df1e1a016",
+    "!PushyII/!sprites": "68ab3f67f88197dea606eb6c510dcee02ac62c0ddfa972e612a2bf7fc890f882",
+    "!PushyII/!sprites22": "daf2a177914f5cedae9048fc86f09b946c9ac5d03e2db93b29cecce513acce10",
+    "!PushyII/Data/FadeTable": "d4e94dce1b7f450d4a8938f3f92ac01cb4b259c876a2a3059815ddc9a27205db",
+    "!PushyII/Data/SFXdata": "a3bf9256c85522fe27d7a579cba89d79d46a5c150ef40a435da25d5190b7c463",
+    "!PushyII/Diary": "57f705cb5f6f86347977cd920a0523751fc0dd26ef758c249240b18e860ff022",
+    "!PushyII/GFX24/LegoCht": "4ab2d5bca329b1b78f03c1bc83436c90b1136153d624b6352f27cae9cc860bb7",
+    "!PushyII/GFX24/Sprites": "11d551c261f0f1a68b94cff0e189bf735bd7b8b1f1a8fd54037de9102f71d411",
+    "!PushyII/GFX24/You": "e0007841ead2865622b95ec4eedf64bfe10919acb04a0c5d686c3ffe02bc6666",
+    "!PushyII/GFX24/fishes": "67df602525eb5e44557155d7658c5b79f4eb0bf63355bc584c812b8f7def2969",
+    "!PushyII/GFX8Hi/Alphabet": "4c6b0aa834c11b679f7f20cf8a735c3c14967b1794deb217c35277094fb52878",
+    "!PushyII/GFX8Hi/LegoCht": "17a4a98b43018ee845af3b25d3504c22ef6132e3582a22eff84222bf90e3c06c",
+    "!PushyII/GFX8Hi/Sprites": "f784d17139eb3eab6e8b1cb683185dcd508fddbeb0485ee381dea2099dcb3850",
+    "!PushyII/GFX8Hi/You": "eacb4fc6d38b8a8c1eed970d7c8c1f2d2109623f70f694fad9d11a579b0f8729",
+    "!PushyII/GFX8Hi/fishes": "4a2d77e11d55fd7df62e20359d98590b36981f28953f61ec8b6df8328f629134",
+    "!PushyII/GFX8Lo/Alphabet": "e206772496964f7c4ee1b3bf19384d4657464ee0d4efcc0a26ed8512784ce136",
+    "!PushyII/GFX8Lo/LegoCht": "6c3425311659559322273cad36bf681e23ed529f1edb0d1b9991bfd2a89fa005",
+    "!PushyII/GFX8Lo/Sprites": "844f5cb7cb48d1e5ccd75f125c94d5c35f7d19d2a9c0d236ce85abbbb860f658",
+    "!PushyII/GFX8Lo/StoneCht": "6a5b240a981a18ef01e317afe06b87631ea2567b3e71dbf96a12feef41139b3f",
+    "!PushyII/GFX8Lo/You": "343876048ba9a93c328beae069a9dc949a0ab808d0faae9fb6bfb758e23c8148",
+    "!PushyII/GFX8Lo/fishes": "76782e06c7019006ba8e1a9ec2211a8891e02ea7b9d6624e31a61ddd29c3838f",
+    "!PushyII/Levels/LegoLev": "3ad64b7aedeba00c8a465733728e13f75b365c90c18ee734aba91063cb2a276b",
+    "!PushyII/Levels/Pushy1": "ce59dbf8753235ac293ae3865641a411b2fa3295bc68c4bad84f355225697197",
+    "!PushyII/Templates": "ef7b75eb8deb057afd089467b953aee0fb6e323a881c6dd125c0884939b18734"
+   },
+   "game_dirs": [
+    "!PushyII"
+   ]
+  }
+ ],
+ "build": [
+  "python3 -I \"$WEAVE\" extract . INPUTS",
+  "make -C recomp regen",
+  "make -C recomp"
+ ],
+ "output": "recomp/pushy2",
+ "requires": {
+  "superspider": "~/stuff/superspider, or $SUPERSPIDER (dune build): analyse, gen, tools/weave.py",
+  "libroger": "~/stuff/libroger, or make ROGER=...",
+  "host": [
+   "python3",
+   "ocaml + dune",
+   "gcc",
+   "SDL3 (pkg-config sdl3)"
+  ]
+ },
+ "run": "cd recomp && ./pushy2"
+}

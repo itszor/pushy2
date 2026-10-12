@@ -1,6 +1,18 @@
 Pushy II (R-Fred-W / FishNet Software, 1996; freeware) - static recompilation
 =============================================================================
 
+A recipe: this repository holds no game data. It rebuilds the game from
+your own copy, recognised by content (recipe.json):
+
+    ./build.sh PUSHY2       (a RISC OS zip of !PushyII, or a directory holding !PushyII)
+    cd recomp && ./pushy2
+
+build.sh runs recipe.json's steps with SuperSpider's tools/weave.py
+(~/stuff/superspider, or $SUPERSPIDER): it unpacks the zip to
+extracted/app (its RISC OS filetypes as ,load-exec suffixes) and
+!PushyII to game/ (libroger's appdir), then analyses, translates and
+links. Needs python3, OCaml/dune, gcc and SDL3.
+
 `!PushyII` is the application as distributed (v2.12): `!RunImage` (an AIF
 image written in assembler, 30K), graphics for three kinds of screen mode
 (GFX8Lo, GFX8Hi, GFX24), two level sets (Levels.LegoLev, Levels.Pushy1),
